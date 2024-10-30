@@ -1,0 +1,36 @@
+services:
+
+  postgres:
+    image: postgres:alpine3.20
+    restart: always
+    command: postgres -c 'max_connections=250'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=example
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init-postgres:/docker-entrypoint-initdb.d
+
+  keycloak:
+    image: keycloak/keycloak:26.0.4
+    restart: always
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - DB_VENDOR=postgres
+      - DB_ADDR=db:5432
+      - DB_DATABASE=keycloak
+      - DB_USER=root
+      - DB_PASSWORD=example
+      # 开启http
+      - KC_HTTP_ENABLED=true
+      # 禁用主机名严格检查
+      - KC_HOSTNAME_STRICT=false
+      # 设置相对路径为 /auth
+      - KC_HTTP_RELATIVE_PATH=/auth
+    command: start 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
