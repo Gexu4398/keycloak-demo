@@ -18,11 +18,10 @@ services:
     environment:
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
-      - DB_VENDOR=postgres
-      - DB_ADDR=db:5432
-      - DB_DATABASE=keycloak
-      - DB_USER=root
-      - DB_PASSWORD=example
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=root
+      - KC_DB_PASSWORD=example
       # 开启http
       - KC_HTTP_ENABLED=true
       # 禁用主机名严格检查
