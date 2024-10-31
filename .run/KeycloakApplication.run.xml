@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="KeycloakApplication" type="QsApplicationConfigurationType" factoryName="QuarkusApplication">
+    <option name="MAIN_CLASS_NAME" value="KeycloakApplication" />
+    <module name="keycloak-demo" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

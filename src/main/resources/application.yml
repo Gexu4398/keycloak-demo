@@ -1,0 +1,28 @@
+quarkus:
+  datasource:
+    db-kind: postgresql
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/keycloak
+      driver: org.postgresql.Driver
+    username: root
+    password: example
+  hibernate-orm:
+    database:
+      generation: none
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    log:
+      sql: false
+  oidc:
+    auth-server-url: http://localhost:8080/auth/realms/console-app
+    client-id: console-cli
+    token:
+      token-type: Bearer
+      jwks-path: http://localhost:8080/auth/realms/console-app/protocol/openid-connect/certs
+
+keycloak:
+  realm: console-app
+  resource: console-cli
+  auth-server-url: http://localhost:8080/auth
+  admin:
+    username: admin
+    password: admin
