@@ -14,8 +14,9 @@ services:
 
   keycloak:
     image: keycloak/keycloak:26.0.4
-    restart: always
     environment:
+      - BASE_URL=http://localhost/
+      - APP_NAME=MySystem
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
       - KC_DB=postgres
@@ -24,11 +25,17 @@ services:
       - KC_DB_PASSWORD=example
       # 开启http
       - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME=localhost
       # 禁用主机名严格检查
-      - KC_HOSTNAME_STRICT=false
+      # - KC_HOSTNAME_STRICT=false
       # 设置相对路径为 /auth
       - KC_HTTP_RELATIVE_PATH=/auth
-    command: start 
+      - KC_PROXY_HEADERS=xforwarded
+    command: start --http-enabled=true --import-realm --spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false
+    volumes:
+      - ./init-keycloak/realm.json:/opt/keycloak/data/import/realm.json
+      - ./init-keycloak/tp-theme:/opt/keycloak/themes/tp-theme
+    restart: always
     ports:
       - "8080:8080"
     depends_on:
